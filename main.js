@@ -1,12 +1,20 @@
 const puppeteer = require('puppeteer')
 const path = require('path')
-
+const MarkdownIt = require('markdown-it')
 const express = require('express')
+const fs = require('fs')
 const app = express()
 const port = 13680
 
 app.use(express.json()) // for parsing application/json
 app.use(express.urlencoded({ extended: true })) // for parsing application/x-www-form-urlencoded
+
+app.get('/readme', async (req, res) => {
+  const md = new MarkdownIt()
+  const readmeStr = fs.readFileSync('./README.MD', { encoding: 'utf-8' })
+  const result = md.render(readmeStr)
+  res.send(result)
+})
 
 app.post('/removebg', async (req, res) => {
   try {
