@@ -31,7 +31,7 @@ app.post('/removebg', async (req, res) => {
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
 
 async function getImage(url) {
-  const browser = await puppeteer.launch({ headless: false, args: ['--no-sandbox', '--disable-setuid-sandbox'] })
+  const browser = await puppeteer.launch({ headless: true, args: ['--no-sandbox', '--disable-setuid-sandbox'] })
   const page = await browser.newPage()
   page.on('dialog', async (dialog) => {
     await dialog.accept(url)
