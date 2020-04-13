@@ -21,7 +21,17 @@ http://removebg.spraylee.com/removebg
 > 正常情况下，10 多秒返回抠图结果
 
 ```
-{ "result": "https://o.remove.bg/downloads/d9d096e8-24c0-4fe0-8e1d-ae3ae00283ff/20191203080329185-removebg-preview.png"}
+{
+  "result": "https://o.remove.bg/downloads/d9d096e8-24c0-4fe0-8e1d-ae3ae00283ff/20191203080329185-removebg-preview.png",
+  "time": {
+    "openBrowser": 123,
+    "openPage": 123,
+    "openSite": 123,
+    "inputImageUrl": 123,
+    "getResult": 123,
+    "total": 123,
+  }
+}
 ```
 
 ## 异常处理
