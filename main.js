@@ -24,7 +24,9 @@ app.post('/removebg', async (req, res) => {
     if (!req.body || !req.body.url) {
       return res.status(400).send({ reason: `no url provided in body` })
     }
-    const result = await getImage(req.body.url, missionOrderId)
+    console.log(`${missionOrderId} request: ${JSON.stringify(req.body)}`)
+    const proxy = req.body.proxy
+    const result = await getImage(req.body.url, proxy, missionOrderId)
     res.send(result)
   } catch (e) {
     res.status(500).send({ reason: e.message })
@@ -33,16 +35,17 @@ app.post('/removebg', async (req, res) => {
 
 app.listen(port, () => console.log(`Example app listening at http://localhost:${port}`))
 
-async function getImage(url, id) {
+async function getImage(url, proxy, id) {
   let browser = null
   try {
     const start = new Date().getTime()
     let beforeInputUrl = 0
-    browser = await puppeteer.launch({
-      headless: false,
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-      // args: ['--no-sandbox', '--disable-setuid-sandbox', '--proxy-server=219.136.204.249:88'],
-    })
+    const browserArgs = ['--no-sandbox', '--disable-setuid-sandbox']
+    if (proxy) {
+      // example: 219.136.204.249:88
+      browserArgs.push(`--proxy-server=${proxy}`)
+    }
+    browser = await puppeteer.launch({ headless: false, args: browserArgs })
     const afterBrowser = new Date().getTime()
     const page = await browser.newPage()
     console.log(`${id}: page is open`)
