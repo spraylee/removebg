@@ -20,7 +20,6 @@ app.get('/readme', async (req, res) => {
 
 app.post('/removebg', async (req, res) => {
   missionOrderId++
-  console.log(`${missionOrderId} request: ${JSON.stringify(req.body)}`)
   try {
     if (!req.body || !req.body.url) {
       return res.status(400).send({ reason: `no url provided in body` })
