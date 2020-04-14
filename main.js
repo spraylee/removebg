@@ -60,6 +60,15 @@ async function getImage(url, proxy, id) {
     const afterPageOpen = new Date().getTime()
     console.log(`${id}: site is open`)
     btn.click()
+    await Promise.race([
+      new Promise(async (resolve, reject) => {
+        resolve(await page.waitForSelector('img.transparency-grid'))
+      }),
+      new Promise(async (resolve, reject) => {
+        await page.waitForSelector('.checkbox-captcha').catch((err) => reject(err))
+        reject(Error('出现人机验证界面，放弃当前任务！'))
+      }),
+    ])
     await page.waitForSelector('img.transparency-grid')
     const resultImageSrc = await page.$eval('img.transparency-grid', (el) => el.src)
     const afterResult = new Date().getTime()
@@ -77,7 +86,7 @@ async function getImage(url, proxy, id) {
       result: resultImageSrc,
     }
   } catch (e) {
-    console.log(`${id} Error: ${e.message} !!!`)
+    console.log(`${id} Error: ${e.message} !!!!!!!!`)
     browser && browser.close()
     throw e
   }
