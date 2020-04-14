@@ -45,7 +45,8 @@ async function getImage(url, proxy, id) {
       // example: 219.136.204.249:88
       browserArgs.push(`--proxy-server=${proxy}`)
     }
-    browser = await puppeteer.launch({ headless: false, args: browserArgs })
+    const isWin = !!process.platform.match(/win/i)
+    browser = await puppeteer.launch({ headless: !isWin, args: browserArgs })
     const afterBrowser = new Date().getTime()
     const page = await browser.newPage()
     console.log(`${id}: page is open`)
