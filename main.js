@@ -4,7 +4,10 @@ const MarkdownIt = require('markdown-it')
 const express = require('express')
 const fs = require('fs')
 const app = express()
-const port = 13680
+
+const argv = require('optimist').argv
+
+const port = argv.port || 13680
 
 let missionOrderId = 0
 

@@ -11,6 +11,8 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+yarn.lock
+
 # Editor directories and files
 .idea
 *.suo
@@ -18,5 +20,3 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
-
-yarn.lock
