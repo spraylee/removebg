@@ -56,14 +56,14 @@ async function getImage(url, proxy, id) {
       console.log(`${id}: input url`)
       await dialog.accept(url)
     })
-    await page.goto('https://www.remove.bg/upload')
+    await page.goto('https://www.remove.bg/upload', { timeout: 60 * 1000 })
     const btn = await page.waitForSelector('.select-photo-url-btn')
     const afterPageOpen = new Date().getTime()
     console.log(`${id}: site is open`)
     btn.click()
     await Promise.race([
       new Promise(async (resolve, reject) => {
-        resolve(await page.waitForSelector('img.transparency-grid').catch((err) => reject(err)))
+        resolve(await page.waitForSelector('img.transparency-grid', { timeout: 60 * 1000 }).catch((err) => reject(err)))
       }),
       new Promise(async (resolve, reject) => {
         await page.waitForSelector('.checkbox-captcha').catch((err) => reject(err))
