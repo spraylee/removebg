@@ -66,7 +66,7 @@ async function getImage(url, proxy, id) {
         resolve(await page.waitForSelector('img.transparency-grid', { timeout: 60 * 1000 }).catch((err) => reject(err)))
       }),
       new Promise(async (resolve, reject) => {
-        await page.waitForSelector('.checkbox-captcha').catch((err) => reject(err))
+        await page.waitForSelector('.checkbox-captcha', { timeout: 60 * 1000 }).catch((err) => reject(err))
         reject(Error('出现人机验证界面，放弃当前任务！'))
       }),
     ])
