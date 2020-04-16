@@ -10,10 +10,10 @@ http://removebg.spraylee.com/removebg
 
 ## 请求参数
 
-> json 格式
+> json 格式, 其中 proxy 可以不填
 
 ```
-{ "url": "https://himg2.huanqiucdn.cn/attachment2010/2019/1203/20191203080329185.jpg" }
+{ "url": "https://himg2.huanqiucdn.cn/attachment2010/2019/1203/20191203080329185.jpg", "proxy": "123.123.123.123:123" }
 ```
 
 ## 返回参数

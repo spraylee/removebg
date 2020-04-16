@@ -5,8 +5,17 @@ const express = require('express')
 const fs = require('fs')
 const app = express()
 
+/**
+ * 运行此文件时的传参
+ * {
+ *    port?:     number  default: 13680
+ *    headless?: boolean default: win -> false, other -> true
+ * }
+ */
 const argv = require('optimist').argv
 
+const isWin = !!process.platform.match(/win/i)
+const isHeadless = !isWin ? true : argv.headless
 const port = argv.port || 13680
 
 let missionOrderId = 0
@@ -48,8 +57,7 @@ async function getImage(url, proxy, id) {
       // example: 219.136.204.249:88
       browserArgs.push(`--proxy-server=${proxy}`)
     }
-    const isWin = !!process.platform.match(/win/i)
-    browser = await puppeteer.launch({ headless: !isWin, args: browserArgs })
+    browser = await puppeteer.launch({ headless: isHeadless, args: browserArgs })
     const afterBrowser = new Date().getTime()
     const page = await browser.newPage()
     console.log(`${id}: page is open`)
