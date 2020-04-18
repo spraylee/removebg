@@ -41,3 +41,7 @@ http://removebg.spraylee.com/removebg
 ```
 { "reason": "some reason..."}
 ```
+
+## 注意事项
+
+ubuntu 上若安装 puppeteer 失败，可以尝试 npm install -g puppeteer --unsafe-perm=true --allow-root，参考 https://github.com/puppeteer/puppeteer/issues/2173
