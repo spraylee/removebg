@@ -82,7 +82,9 @@ async function getImage(url, proxy, id) {
       }),
       new Promise(async (resolve, reject) => {
         await page.waitForSelector('.alert-danger', { timeout: 45 * 1000 }).catch((err) => reject(err))
-        const errMessage = await page.$eval('.alert-danger', (el) => el.innerHTML.replace(/[\r\n]/g, '').trim())
+        const errMessage = await page
+          .$eval('.alert-danger', (el) => el.innerHTML.replace(/[\r\n]/g, '').trim())
+          .catch((err) => reject(err))
         reject(Error(`抠图失败: ${errMessage}`))
       }),
     ])
