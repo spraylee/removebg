@@ -15,7 +15,7 @@ const app = express()
 const argv = require('optimist').argv
 
 const isWin = !!process.platform.match(/win/i)
-const isHeadless = !isWin ? true : argv.headless
+const isHeadless = !isWin ? true : !!argv.headless
 const port = argv.port || 13680
 
 let missionOrderId = 0
@@ -79,6 +79,11 @@ async function getImage(url, proxy, id) {
       new Promise(async (resolve, reject) => {
         await page.waitForSelector('.checkbox-captcha', { timeout: 45 * 1000 }).catch((err) => reject(err))
         reject(Error('出现人机验证界面，放弃当前任务！'))
+      }),
+      new Promise(async (resolve, reject) => {
+        await page.waitForSelector('.alert-danger', { timeout: 45 * 1000 }).catch((err) => reject(err))
+        const errMessage = await page.$eval('.alert-danger', (el) => el.innerHTML)
+        reject(Error(`Alert: ${errMessage}`))
       }),
     ])
     await page.waitForSelector('img.transparency-grid')
